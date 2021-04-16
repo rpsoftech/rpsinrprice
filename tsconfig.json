@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "commonjs",
+    "outDir": "dist",
+    "moduleResolution": "Node",
+    "removeComments": true,
+    "declarationMap": false,
+    "declaration": false,
+    "sourceMap": false
+  },
+  "include": ["./src/*.ts","./websocket_server/*.ts"],
+  "exclude": ["node_modules", ".vscode"]
+}

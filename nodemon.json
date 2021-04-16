@@ -1,0 +1,5 @@
+{
+  "ignore": ["src/**/*.spec.ts", "node_modules/*","websocket_server/*","functions/*"],
+  "exec": "npm start",
+  "ext": "ts"
+}

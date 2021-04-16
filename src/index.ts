@@ -1,10 +1,13 @@
-import { randomInt, randomBytes } from 'crypto';
+import { randomBytes } from 'crypto';
 import { EventEmitter } from 'stream';
 import * as WebSocket from 'ws';
 const InrPriceEmiter1 = new EventEmitter();
 const url = process.env.inr_url || 'wss://stream119.forexpros.com/echo';
+function getRandomArbitrary(min:number, max) {
+  return Math.random() * (max - min) + min;
+}
 function GetRandom3Digits() {
-  const num = randomInt(1000);
+  const num = getRandomArbitrary(99,1000);
   if (num > 99) {
     return num;
   } else {

@@ -2,12 +2,12 @@ import { randomBytes } from 'crypto';
 import { EventEmitter } from 'stream';
 import * as WebSocket from 'ws';
 const InrPriceEmiter1 = new EventEmitter();
-const url = process.env.inr_url || 'wss://stream119.forexpros.com/echo';
+const url = process.env.inr_url || 'wss://stream123.forexpros.com/echo';
 function getRandomArbitrary(min:number, max) {
-  return Math.random() * (max - min) + min;
+  return Math.floor(Math.random() * (max - min) + min);
 }
 function GetRandom3Digits() {
-  const num = getRandomArbitrary(99,1000);
+  const num = getRandomArbitrary(99,999);
   if (num > 99) {
     return num;
   } else {
@@ -30,7 +30,8 @@ function Init() {
     `${url}/${GetRandom3Digits()}/${randomBytes(4).toString('hex')}/websocket`
   );
   let Interval = null;
-  ws.on('open', () => {});
+  ws.on('open', () => {
+  });
   ws.on('message', (data) => {
     if (data === 'o') {
       setTimeout(() => {
@@ -80,7 +81,11 @@ function Init() {
       Init();
     }, 2000);
   });
-  ws.on('unexpected-response', console.log);
+  ws.on('unexpected-response', a=>{
+    console.log(a);
+    
+  });
 }
 Init();
+
 export const InrPriceEmiter = InrPriceEmiter1;

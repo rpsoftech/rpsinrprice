@@ -6,7 +6,7 @@
     "moduleResolution": "Node",
     "removeComments": true,
     "declarationMap": false,
-    "declaration": false,
+    "declaration": true,
     "sourceMap": false
   },
   "include": ["./src/*.ts","./websocket_server/*.ts"],

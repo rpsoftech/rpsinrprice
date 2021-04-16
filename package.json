@@ -2,7 +2,7 @@
   "name": "rpsinrprice",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "node -r ts-node/register ./src/index.ts --dev",
     "start:watch": "nodemon",

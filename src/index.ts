@@ -3,7 +3,6 @@ import { EventEmitter } from 'stream';
 import * as WebSocket from 'ws';
 import { JSDOM } from 'jsdom';
 const InrPriceEmiter1 = new EventEmitter();
-InrPriceEmiter1.addListener('rate', console.log);
 const url = process.env.inr_url || 'wss://stream123.forexpros.com/echo';
 function getRandomArbitrary(min: number, max) {
   return Math.floor(Math.random() * (max - min) + min);

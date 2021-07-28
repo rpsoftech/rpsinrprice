@@ -3,3 +3,4 @@ src
 pack.js
 tsconfig.json
 nodemon.json
+.prettierrc

@@ -1,13 +1,15 @@
 import { randomBytes } from 'crypto';
 import { EventEmitter } from 'stream';
 import * as WebSocket from 'ws';
+import { JSDOM } from 'jsdom';
 const InrPriceEmiter1 = new EventEmitter();
+InrPriceEmiter1.addListener('rate', console.log);
 const url = process.env.inr_url || 'wss://stream123.forexpros.com/echo';
-function getRandomArbitrary(min:number, max) {
+function getRandomArbitrary(min: number, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 function GetRandom3Digits() {
-  const num = getRandomArbitrary(99,999);
+  const num = getRandomArbitrary(99, 999);
   if (num > 99) {
     return num;
   } else {
@@ -25,13 +27,41 @@ const msg2 = JSON.stringify({
   message: 'isOpenPair-160:',
 });
 const heartbeat = JSON.stringify({ _event: 'heartbeat', data: 'h' });
-function Init() {
+async function GetInrFromUrl() {
+  const a = await JSDOM.fromURL(
+    'https://in.widgets.investing.com/live-currency-cross-rates?theme=darkTheme&roundedCorners=true&pairs=160&cols=bid,ask,last,prev,high,low'
+  );
+  const ele = a.window.document.getElementById('pair_160');
+  if (ele.children.length > 6) {
+    const rate = {
+      symbol: ele.children.item(0).textContent,
+      bid: ele.children.item(1).textContent,
+      ask: ele.children.item(2).textContent,
+      last: ele.children.item(3).textContent,
+      open: ele.children.item(4).textContent,
+      high: ele.children.item(5).textContent,
+      low: ele.children.item(6).textContent,
+    };
+    const rate1 = {
+      'bid-price': rate['bid'],
+      'bid-high-price': rate['high'],
+      'bid-low-price': rate['low'],
+      'ask-price': rate['ask'],
+      'last-high': rate['high'],
+      'last-low': rate['low'],
+      'ask-high-price': rate['high'],
+      'ask-low-price': rate['low'],
+    };
+    InrPriceEmiter1.emit('rate', rate1);
+  }
+  Init();
+}
+async function Init() {
   const ws = new WebSocket(
     `${url}/${GetRandom3Digits()}/${randomBytes(4).toString('hex')}/websocket`
   );
   let Interval = null;
-  ws.on('open', () => {
-  });
+  ws.on('open', () => {});
   ws.on('message', (data) => {
     if (data === 'o') {
       setTimeout(() => {
@@ -81,11 +111,9 @@ function Init() {
       Init();
     }, 2000);
   });
-  ws.on('unexpected-response', a=>{
+  ws.on('unexpected-response', (a) => {
     console.log(a);
-    
   });
 }
-Init();
-
+GetInrFromUrl();
 export const InrPriceEmiter = InrPriceEmiter1;

@@ -82,14 +82,14 @@ async function Init() {
               const data = JSON.parse(a['message'].replace('pid-160::', ''));
               try {
                 const price = {
-                  'bid-price': data['bid'],
-                  'bid-high-price': data['high'],
-                  'bid-low-price': data['low'],
-                  'ask-price': data['ask'],
-                  'last-high': data['high'],
-                  'last-low': data['low'],
-                  'ask-high-price': data['high'],
-                  'ask-low-price': data['low'],
+                  'bid-price': +data['bid'],
+                  'bid-high-price': +data['high'],
+                  'bid-low-price': +data['low'],
+                  'ask-price': +data['ask'],
+                  'last-high': +data['high'],
+                  'last-low': +data['low'],
+                  'ask-high-price': +data['high'],
+                  'ask-low-price': +data['low'],
                 };
                 InrPriceEmiter1.emit('rate', price);
               } catch (error) {}

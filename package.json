@@ -3,6 +3,7 @@
   "version": "1.4.1",
   "description": "",
   "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "start": "node -r ts-node/register ./src/index.ts --dev",
     "start:watch": "nodemon",
